@@ -1,0 +1,17 @@
+project:
+  name: Explainable-Fashion-Design-AI
+
+data:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+
+outputs:
+  figures_dir: outputs/figures
+  metrics_dir: outputs/metrics
+  generated_designs_dir: outputs/generated_designs
+
+models:
+  generation_dir: models/generation
+  demand_dir: models/demand
+  preference_dir: models/preference

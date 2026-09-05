@@ -216,3 +216,56 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# =========================
+# Project specific
+# =========================
+
+# Raw datasets
+data/raw/deepfashion/*
+!data/raw/deepfashion/README.md
+
+data/raw/visuelle/*
+!data/raw/visuelle/README.md
+
+data/raw/hm/*
+!data/raw/hm/README.md
+
+# Processed datasets
+data/processed/*
+!data/processed/.gitkeep
+
+data/interim/*
+!data/interim/.gitkeep
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.h5
+
+# Generated outputs
+outputs/generated_designs/*
+!outputs/generated_designs/.gitkeep
+
+# Secrets
+.env
+kaggle.json
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
