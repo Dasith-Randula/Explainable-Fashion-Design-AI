@@ -1,354 +1,580 @@
-# Explainable Fashion Design AI
+Explainable Multi-Objective Generative Fashion Design
 
-## Explainable Multi-Objective Generative Fashion Design Using Deep Learning and Machine Learning for Pre-Production Market Optimization
+CCS4310 – Deep Learning | Group 07 | SLTC Research University
 
-A university Deep Learning group project developed for **CCS4310 – Deep Learning** at **SLTC Research University**.
+An explainable AI-based fashion design decision-support system that combines Deep Learning, Machine Learning, and Explainable AI to generate fashion concepts, estimate pre-production market potential, model customer preference, explain model decisions, and refine designs before final selection.
 
----
+Table of Contents
 
-## Project Overview
+Project Overview
 
-Fashion businesses need to make important decisions before launching a new product, including selecting the right design, colour, style, season, and target customer segment. However, a newly created design has no direct sales history, and fashion trends can change quickly over time.
+Problem Statement
 
-This project proposes an **explainable and time-aware AI system** that combines **Deep Learning** and **Machine Learning** to support pre-production fashion decisions.
+Project Objectives
 
-The proposed system will:
+Proposed System
 
-- Generate fashion design concepts using Deep Learning.
-- Extract visual and semantic features from generated designs.
-- Predict expected demand and customer preference using Machine Learning.
-- Explain the main factors behind each prediction.
-- Refine low-performing designs using the explanation feedback.
-- Re-evaluate designs using recent market information before launch.
+System Architecture
 
----
+Datasets
 
-## Core Workflow
+AI and ML Components
 
-```text
-Design Brief
-    ↓
-Fashion Design Generation
-    ↓
-Visual Feature Extraction
-    ↓
-Demand & Customer Preference Prediction
-    ↓
+Explainability and Refinement
+
 Time-Aware Market Re-Evaluation
-    ↓
+
+Evaluation Metrics
+
+Technology Stack
+
+Repository Structure
+
+Implementation Roadmap
+
+Current Status
+
+Team
+
+Scope and Limitations
+
+Academic Use
+
+Project Overview
+
+Fashion products are often designed and produced before there is strong evidence that customers will prefer them or that they will perform well in the market.
+
+This project investigates a pre-production AI decision-support workflow where fashion concepts can be generated using Deep Learning, represented using visual and product features, evaluated for expected demand and customer preference, explained using interpretable AI methods, refined based on identified strengths and weaknesses, and re-evaluated before human approval.
+
+The aim is not to replace fashion designers or guarantee sales. The system is intended to provide data-driven support during early design decision-making.
+
+Problem Statement
+
+A newly generated fashion design has no direct historical sales record. In addition, fashion demand and customer preferences can change over time.
+
+The project therefore addresses two key challenges:
+
+Cold-start evaluation: estimating the potential of a new design using visual, product, seasonal, and similar-product information.
+
+Time sensitivity: reducing the effect of outdated market information by using chronological evaluation and time-aware re-evaluation.
+
+Project Objectives
+
+Generate 2D fashion design concepts using Deep Learning.
+
+Extract meaningful visual representations from fashion images.
+
+Predict expected demand for new fashion designs before production.
+
+Model customer preference and product ranking behaviour.
+
+Explain the factors that influence demand and preference predictions.
+
+Convert explanation results into practical design refinement suggestions.
+
+Regenerate and re-evaluate improved design concepts.
+
+Incorporate time-aware market features to support later re-evaluation.
+
+Present the complete workflow through a professional web dashboard.
+
+Proposed System
+
+Design Brief
+    |
+    v
+Fashion Design Generation
+    |
+    v
+Visual Feature Extraction
+    |
+    +-------------------+
+    |                   |
+    v                   v
+Demand Prediction   Preference / Ranking
+    |                   |
+    +---------+---------+
+              |
+              v
+Time-Aware Market Re-Evaluation
+              |
+              v
 Explainability
-    ↓
-Design Refinement
-    ↓
-Final Recommendation
-```
+              |
+              v
+Refinement Suggestions
+              |
+              v
+Design Regeneration
+              |
+              v
+Re-Evaluation and Ranking
+              |
+              v
+Human Approval
 
----
+System Architecture
 
-## Main Research Objective
+The final application is planned as a separated frontend and AI backend architecture.
 
-To develop and evaluate an **explainable, time-aware, closed-loop fashion design system** that uses Deep Learning for design generation and visual analysis, and Machine Learning for demand and customer-preference prediction before production.
+Flutter Web Dashboard
+        |
+        | REST API
+        v
+Python Backend
+        |
+        +-----------------------------+
+        |              |              |
+        v              v              v
+Generation       Demand Model   Preference Model
+        |              |              |
+        +--------------+--------------+
+                       |
+                       v
+               Explainability Layer
+                       |
+                       v
+              Refinement / Re-Scoring
 
----
+Frontend
 
-## Selected Datasets
+Flutter
 
-### 1. DeepFashion-MultiModal
-**Purpose:** Fashion generation, visual feature extraction, and attribute recognition.
+Dart
 
-**Source:**  
-https://github.com/yumingj/DeepFashion-MultiModal
+Web dashboard
 
-### 2. Visuelle 2.0
-**Purpose:** Demand prediction, sales forecasting, seasonal analysis, and new-product forecasting.
+Planned deployment: Vercel
 
-**Source:**  
-https://humaticslab.github.io/forecasting/visuelle
+Backend
 
-### 3. H&M Personalized Fashion Recommendations
-**Purpose:** Customer-preference modelling, product popularity analysis, and product ranking.
+Python
 
-**Source:**  
-https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/data
+REST API
 
-> **Note:** Large raw datasets will not be stored directly in this repository. Dataset access instructions and preprocessing steps will be documented separately.
+Model inference services
 
----
+Data processing services
 
-## Planned Deep Learning Models
+Explainability services
 
-- Stable Diffusion
-- Latent Diffusion
-- LoRA
-- CLIP
-- ResNet50
-- EfficientNet
-- Neural Collaborative Filtering
+Heavy Deep Learning inference may require a separate GPU-enabled hosting environment rather than being executed directly on the frontend hosting platform.
 
----
+Datasets
 
-## Planned Machine Learning Models
+1. DeepFashion-MultiModal
 
-- Linear Regression
-- Random Forest
-- XGBoost
-- LightGBM
-- LightGBM Ranker
-- Popularity Baseline
+Primary use
 
----
+Fashion image understanding
 
-## Explainability
+Text-image conditioning
 
-The project will use explainable AI techniques to identify the factors that influence predictions.
+Visual attribute learning
 
-Planned method:
+Visual feature extraction
 
-- SHAP
+Support for fashion generation experiments
 
-The explanation output will later be used to guide the design-refinement stage.
+Source: https://github.com/yumingj/DeepFashion-MultiModal
 
----
+2. Visuelle 2.0
 
-## Time-Aware Market Re-Evaluation
+Primary use
 
-Fashion trends and customer preferences change over time. A prediction made during early design development may become outdated before the actual product launch.
+Fashion demand forecasting
 
-To reduce this issue, the project plans to use:
+Sales-related modelling
 
-- Chronological train / validation / test splitting
-- Season and month features
-- Launch-period features
-- Product recency features
-- Recent product popularity
-- Recent customer behaviour
-- Similar-product recent performance
-- Pre-launch re-evaluation using the latest available market information
+Seasonal analysis
 
----
+Time-aware evaluation
 
-## Planned Data Analysis
+Source: https://humaticslab.github.io/forecasting/visuelle
 
-### Descriptive Analysis
-- Count
-- Mean
-- Median
-- Standard Deviation
-- Minimum
-- Maximum
-- Frequency
-- Percentage
-- Mode
+3. H&M Personalized Fashion Recommendations
 
-### Visual Analysis
-- Histogram
-- Box Plot
-- Bar Chart
-- Scatter Plot
-- Correlation Heatmap
+Primary use
 
-### Relationship Analysis
-- Univariate Analysis
-- Bivariate Analysis
-- Multivariate Analysis
+Customer-product interaction analysis
 
----
+Customer preference modelling
 
-## Planned Data Transformations
+Product popularity analysis
 
-### Image
-- Resize
-- Normalize
-- Center Crop
-- Random Crop
-- Horizontal Flip
-- Small Rotation
-- Brightness Adjustment
+Ranking and recommendation experiments
 
-### Text
-- Text Cleaning
-- Lowercasing
-- Category Standardization
-- Tokenization
+Source: https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/data
 
-### Tabular
-- Null Value Handling
-- Duplicate Removal
-- Categorical Encoding
-- Numerical Standardization
-- Date Conversion
-- Outlier Handling
-- Chronological Splitting
+Dataset Integration Strategy
 
----
+The datasets contain different products and are not directly joined using product IDs.
 
-## Planned Feature Engineering
+Instead, project modules are connected using compatible representations and features such as:
 
-### Visual Features
-- Image Embeddings
-- Garment Category
-- Dominant Colour
-- Pattern
-- Style
-- Silhouette
+CLIP image embeddings
 
-### Product Features
-- Category
-- Price
-- Season
-- Stock
-- Product Type
+Product category
 
-### Customer Features
-- Purchase Frequency
-- Recent Purchases
-- Preferred Category
-- Preferred Colour
-- Price Preference
-- Customer Segment
+Colour
 
-### Time-Based Features
-- Month
-- Season
-- Week
-- Product Recency
-- Trend Age
-- Launch Period
-- Recent Category Popularity
-- Recent Colour Popularity
+Pattern
 
-### Similar-Product Features
-- Similarity Score
-- Similar-Product Average Sales
-- Similar-Product Popularity
-- Similar-Product Recent Demand
+Style
 
----
+Season
 
-## Planned Evaluation Metrics
+Time-related variables
 
-### Fashion Generation
-- FID
-- CLIPScore
-- LPIPS
+Similar-product signals
 
-### Attribute Classification
-- Accuracy
-- Precision
-- Recall
-- F1-Score
+Large raw datasets are not committed to this repository because of dataset size and licensing or usage restrictions.
 
-### Demand Prediction
-- MAE
-- RMSE
-- WAPE
-- R²
+AI and ML Components
 
-### Customer Preference / Ranking
-- MAP@12
-- Recall@K
-- NDCG@K
+Deep Learning
 
-### Closed-Loop Evaluation
-- Pairwise Preference Rate
-- Market-Alignment Score Improvement
-- Expert Rating
+Stable Diffusion / Latent Diffusion
 
----
+LoRA fine-tuning
 
-## Proposed Repository Structure
+CLIP image embeddings
 
-```text
+CNN-based visual feature extraction where required
+
+Demand Forecasting
+
+Candidate models:
+
+Linear Regression
+
+Random Forest
+
+XGBoost
+
+LightGBM
+
+Customer Preference and Ranking
+
+Candidate approaches:
+
+Popularity baseline
+
+Collaborative Filtering
+
+Neural Collaborative Filtering
+
+Learning-to-Rank approaches
+
+Final models will be selected based on experimental performance.
+
+Explainability and Refinement
+
+Planned methods include:
+
+SHAP for suitable prediction models
+
+Feature importance
+
+Similar-product evidence
+
+Attribute-level explanations
+
+The explanation layer will support refinement suggestions such as modifying colour, pattern, style-related attributes, seasonal alignment, and other model-relevant factors.
+
+The refined design can then be regenerated and evaluated again.
+
+Time-Aware Market Re-Evaluation
+
+The project plans to use:
+
+Chronological train / validation / test splits
+
+Month and week features
+
+Season
+
+Intended launch period
+
+Product recency
+
+Trend age
+
+Recent category popularity
+
+Recent colour popularity
+
+Recent similar-product performance
+
+Recent customer behaviour
+
+A design can be re-evaluated closer to its intended launch period when newer market information becomes available.
+
+This is a decision-support mechanism and does not guarantee future sales performance.
+
+Evaluation Metrics
+
+Fashion Generation
+
+FID
+
+CLIPScore
+
+LPIPS
+
+Human preference evaluation
+
+Demand Forecasting
+
+MAE
+
+RMSE
+
+WAPE
+
+R²
+
+Preference / Ranking
+
+MAP@12
+
+Recall@K
+
+NDCG@K
+
+Closed-Loop Evaluation
+
+Original vs refined design comparison
+
+Pairwise human preference
+
+Market-alignment score improvement
+
+Before/after model score comparison
+
+Technology Stack
+
+AI / Machine Learning
+
+Python
+
+PyTorch
+
+scikit-learn
+
+XGBoost
+
+LightGBM
+
+Hugging Face Transformers
+
+Hugging Face Diffusers
+
+SHAP
+
+Data Analysis
+
+Pandas
+
+NumPy
+
+Matplotlib
+
+Computer Vision
+
+CLIP
+
+OpenCV
+
+Pillow
+
+Application
+
+Flutter
+
+Dart
+
+Python REST API
+
+Deployment
+
+Frontend: Vercel
+
+AI backend: separate backend / GPU hosting environment to be selected during implementation
+
+Repository Structure
+
 Explainable-Fashion-Design-AI/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-│   ├── 01_visuelle_eda.ipynb
-│   ├── 02_hm_eda.ipynb
-│   ├── 03_deepfashion_eda.ipynb
-│   ├── 04_preprocessing.ipynb
-│   ├── 05_feature_engineering.ipynb
-│   ├── 06_demand_models.ipynb
-│   ├── 07_customer_preference.ipynb
-│   ├── 08_visual_features.ipynb
-│   ├── 09_fashion_generation.ipynb
-│   ├── 10_explainability.ipynb
-│   └── 11_closed_loop.ipynb
-│
-├── src/
-│   ├── preprocessing/
-│   ├── feature_engineering/
-│   ├── models/
-│   ├── explainability/
-│   └── utils/
-│
-├── models/
-├── outputs/
-├── app/
-├── docs/
-├── references/
-├── requirements.txt
-└── README.md
-```
+|
+|-- backend/
+|   |-- api/
+|   `-- services/
+|
+|-- frontend/
+|
+|-- data/
+|   |-- raw/
+|   |   |-- deepfashion/
+|   |   |-- hm/
+|   |   `-- visuelle/
+|   |-- interim/
+|   `-- processed/
+|
+|-- notebooks/
+|   |-- eda/
+|   |-- preprocessing/
+|   |-- models/
+|   `-- explainability/
+|
+|-- src/
+|   |-- preprocessing/
+|   |-- feature_engineering/
+|   |-- models/
+|   |-- explainability/
+|   |-- pipeline/
+|   `-- utils/
+|
+|-- models/
+|   |-- generation/
+|   |-- demand/
+|   `-- preference/
+|
+|-- outputs/
+|   |-- figures/
+|   |-- generated_designs/
+|   |-- logs/
+|   `-- metrics/
+|
+|-- docs/
+|   |-- presentations/
+|   |-- proposal/
+|   `-- report/
+|
+|-- references/
+|   `-- papers/
+|
+|-- .gitignore
+|-- config.yaml
+|-- environment.yml
+|-- requirements.txt
+`-- README.md
 
----
+Implementation Roadmap
 
-## Technologies
+Repository and environment setup
 
-- Python
-- PyTorch
-- Scikit-learn
-- Hugging Face Transformers
-- Diffusers
-- XGBoost
-- LightGBM
-- SHAP
-- OpenCV
-- Pandas
-- NumPy
-- Matplotlib
-- Streamlit / FastAPI
+Dataset preparation
 
----
+Exploratory Data Analysis
 
-## Team Members
+Data cleaning and preprocessing
 
-| Member | Registration Number |
-|---|---|
-| Dasith Randula | 23UG1-0057 |
-| Maleesha Viraj | 23UG1-0035 |
-| Nilakshi Sandeepani | 23UG1-0028 |
-| Pramodya Dewmi | CIT-23-02-0090 |
-| Binara Hasanka | CIT-23-02-0137 |
+Feature engineering
 
----
+Baseline demand forecasting
 
-## Module Information
+Customer preference / ranking modelling
 
-- **Module:** CCS4310 – Deep Learning
-- **University:** SLTC Research University
-- **Group:** Group 07
+Visual feature extraction
 
----
+Fashion generation experiments
 
-## Project Status
+Explainability
 
-**Implementation Stage – In Progress**
+Time-aware re-evaluation
+
+Closed-loop refinement
+
+Backend API integration
+
+Flutter dashboard development
+
+Deployment and final evaluation
+
+Current Status
+
+Project stage: Implementation
 
 Current focus:
 
-1. Dataset acquisition
-2. Dataset inspection
-3. Exploratory Data Analysis
-4. Data cleaning and preprocessing
-5. Feature engineering
-6. Baseline model development
+Repository setup
 
----
+Dataset preparation
 
-## Disclaimer
+EDA planning
 
-This project is developed for academic and research purposes. The system is intended to provide **decision support** and does not guarantee future fashion sales, customer behaviour, or commercial success.
+Preprocessing design
+
+The first dataset planned for implementation is Visuelle 2.0.
+
+Results and final model selections will be added only after experiments are completed.
+
+Team
+
+Group 07 – CCS4310 Deep Learning
+
+Member
+
+Registration Number
+
+Dasith Randula
+
+23UG1-0057
+
+Maleesha Viraj
+
+23UG1-0035
+
+Nilakshi Sandeepani
+
+23UG1-0028
+
+Pramodya Dewmi
+
+CIT-23-02-0090
+
+Binara Hasanka
+
+CIT-23-02-0137
+
+Scope and Limitations
+
+In Scope
+
+2D fashion concept generation
+
+Pre-production demand estimation
+
+Customer preference modelling
+
+Explainable prediction
+
+Design refinement
+
+Time-aware re-evaluation
+
+Human approval
+
+Web-based dashboard
+
+Out of Scope
+
+Production-ready sewing patterns
+
+3D garment simulation
+
+Virtual try-on
+
+Guaranteed sales prediction
+
+Exact manufacturing cost or profit estimation
+
+Replacing human designers
+
+Full enterprise production deployment
+
+Academic Use
+
+This repository is developed as part of the CCS4310 – Deep Learning group project at SLTC Research University.
+
+The project is intended for academic research and educational purposes.

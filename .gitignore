@@ -269,3 +269,83 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# =========================
+# Flutter
+# =========================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+coverage/
+.idea/
+*.iml
+
+# Flutter platform generated files
+android/.gradle/
+android/local.properties
+ios/Pods/
+ios/.symlinks/
+macos/Pods/
+
+# =========================
+# Python Backend
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+ENV/
+
+# Environment / Secrets
+.env
+.env.*
+kaggle.json
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Datasets
+# =========================
+data/raw/deepfashion/*
+!data/raw/deepfashion/README.md
+
+data/raw/visuelle/*
+!data/raw/visuelle/README.md
+
+data/raw/hm/*
+!data/raw/hm/README.md
+
+data/interim/*
+!data/interim/.gitkeep
+
+data/processed/*
+!data/processed/.gitkeep
+
+# =========================
+# Model Checkpoints
+# =========================
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.safetensors
+
+# =========================
+# Generated Outputs
+# =========================
+outputs/generated_designs/*
+!outputs/generated_designs/.gitkeep
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
