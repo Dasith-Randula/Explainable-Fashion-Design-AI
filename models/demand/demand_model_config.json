@@ -1,0 +1,100 @@
+{
+  "forecast_mode": "short_observation",
+  "target_column": "demand",
+  "time_column": "time",
+  "time_unit": "week",
+  "identifier_columns": [
+    "external_code",
+    "retail"
+  ],
+  "numerical_features": [
+    "year",
+    "month",
+    "calendar_week",
+    "day_of_week",
+    "demand_lag_1",
+    "demand_lag_3",
+    "demand_rolling_mean_3",
+    "demand_rolling_std_3",
+    "restock_past_1",
+    "price_past_1",
+    "discount_past_1"
+  ],
+  "categorical_features": [
+    "season",
+    "season_from_time",
+    "category",
+    "color",
+    "fabric",
+    "shop_label"
+  ],
+  "time_features": [
+    "year",
+    "month",
+    "calendar_week",
+    "day_of_week",
+    "season_from_time"
+  ],
+  "lag_features": [
+    "demand_lag_1",
+    "demand_lag_3",
+    "demand_rolling_mean_3",
+    "demand_rolling_std_3",
+    "restock_past_1",
+    "price_past_1",
+    "discount_past_1"
+  ],
+  "feature_columns": [
+    "season",
+    "season_from_time",
+    "category",
+    "color",
+    "fabric",
+    "shop_label",
+    "year",
+    "month",
+    "calendar_week",
+    "day_of_week",
+    "demand_lag_1",
+    "demand_lag_3",
+    "demand_rolling_mean_3",
+    "demand_rolling_std_3",
+    "restock_past_1",
+    "price_past_1",
+    "discount_past_1"
+  ],
+  "excluded_leakage_features": [
+    "demand",
+    "future demand",
+    "external_code/raw product ID",
+    "sales.csv.restock aggregate lifecycle field",
+    "future/post-launch restock",
+    "current/future price/discount",
+    "customer outcomes"
+  ],
+  "leakage_exclusions": [
+    "demand",
+    "future demand",
+    "external_code/raw product ID",
+    "sales.csv.restock aggregate lifecycle field",
+    "future/post-launch restock",
+    "current/future price/discount",
+    "customer outcomes"
+  ],
+  "restock_policy": {
+    "sales.csv.restock": "excluded: no weekly timestamp; treated as aggregate lifecycle information",
+    "restocks.csv.restock_weekly": "short_observation: exact calendar-week join then groupby product/shop shift(1); cold_start: excluded",
+    "current/future restock": "never allowed"
+  },
+  "source_file": "data/raw/visuelle/sales.csv",
+  "random_state": 42,
+  "selected_model": "XGBoost",
+  "selection_metric": "validation_WAPE",
+  "trained_on": "train only",
+  "selection_split": "validation",
+  "test_evaluated_once": true,
+  "run_type": "fast_dev",
+  "fast_dev_run": true,
+  "final_evaluation": false,
+  "shap": "not implemented; owned by Dewmi"
+}
