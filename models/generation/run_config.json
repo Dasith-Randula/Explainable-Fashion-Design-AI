@@ -1,0 +1,30 @@
+{
+  "base_model": "runwayml/stable-diffusion-v1-5",
+  "seed": 42,
+  "image_size": 512,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0001,
+  "num_epochs": 1,
+  "lora_rank": 8,
+  "lora_alpha": 16,
+  "lora_dropout": 0.05,
+  "mixed_precision": "no",
+  "fast_dev_run": true,
+  "fast_dev_train_samples": 100,
+  "fast_dev_validation_samples": 20,
+  "evaluation_sample_count": 4,
+  "device": "cpu",
+  "resume_checkpoint": null,
+  "run_type": "fast_dev",
+  "final_evaluation": false,
+  "flags": {
+    "baseline": false,
+    "training": false,
+    "lora": false,
+    "metrics": false
+  },
+  "metrics_output": "d:\\Deep Learning\\Project\\GITHUB\\Explainable-Fashion-Design-AI\\outputs\\metrics\\fashion_generation_model_comparison.csv",
+  "training_metadata_path": "d:\\Deep Learning\\Project\\GITHUB\\Explainable-Fashion-Design-AI\\models\\generation\\training_config.json",
+  "training_metadata_written": false
+}

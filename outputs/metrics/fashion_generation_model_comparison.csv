@@ -1,0 +1,1 @@
+model,run_type,num_samples,CLIPScore,LPIPS,FID,evaluation_label,metric_reasons
