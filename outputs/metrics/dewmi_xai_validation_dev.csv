@@ -1,0 +1,11 @@
+row_index,output_type,actual_prediction,reconstructed_prediction,difference,tolerance,consistent,base_value,sum_shap_values,message,run_type
+0,regression_prediction,3.4022860527038574,3.40228680830387,7.556000127806328e-07,0.001,True,1.1268543004989624,2.275432507804908,SHAP reconstruction is consistent within tolerance.,fast_dev
+1,regression_prediction,0.840893030166626,0.8408929136230938,1.1654353215817537e-07,0.001,True,1.1268543004989624,-0.2859613868758686,SHAP reconstruction is consistent within tolerance.,fast_dev
+2,regression_prediction,0.8891270160675049,0.8891271810941532,1.6502664834661118e-07,0.001,True,1.1268543004989624,-0.23772711940480917,SHAP reconstruction is consistent within tolerance.,fast_dev
+3,regression_prediction,0.34058019518852234,0.340580087024577,1.0816394535595464e-07,0.001,True,1.1268543004989624,-0.7862742134743854,SHAP reconstruction is consistent within tolerance.,fast_dev
+4,regression_prediction,1.0614968538284302,1.0614971285459234,2.747174931982954e-07,0.001,True,1.1268543004989624,-0.06535717195303903,SHAP reconstruction is consistent within tolerance.,fast_dev
+5,regression_prediction,1.64919912815094,1.6491994030944852,2.7494354526425013e-07,0.001,True,1.1268543004989624,0.5223451025955228,SHAP reconstruction is consistent within tolerance.,fast_dev
+6,regression_prediction,1.6508532762527466,1.6508534341899548,1.5793720820056478e-07,0.001,True,1.1268543004989624,0.5239991336909924,SHAP reconstruction is consistent within tolerance.,fast_dev
+7,regression_prediction,0.6906482577323914,0.6906483392851612,8.155276987054094e-08,0.001,True,1.1268543004989624,-0.4362059612138012,SHAP reconstruction is consistent within tolerance.,fast_dev
+8,regression_prediction,1.083928108215332,1.0839279168068856,1.914084464260668e-07,0.001,True,1.1268543004989624,-0.0429263836920768,SHAP reconstruction is consistent within tolerance.,fast_dev
+9,regression_prediction,1.5199754238128662,1.5199759858582098,5.620453435994932e-07,0.001,True,1.1268543004989624,0.3931216853592474,SHAP reconstruction is consistent within tolerance.,fast_dev

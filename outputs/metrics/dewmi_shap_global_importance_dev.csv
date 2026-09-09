@@ -1,0 +1,185 @@
+,mean_abs_shap
+num__demand_rolling_mean_3,0.23184093452161178
+num__demand_lag_1,0.17485685016621136
+num__restock_past_1,0.11676234507283662
+num__discount_past_1,0.0643648534765809
+num__demand_rolling_std_3,0.036929281082822854
+num__calendar_week,0.030196289452211932
+cat__season_AW18,0.028096339545366937
+num__demand_lag_3,0.026088486310158986
+num__month,0.023875416777469217
+num__price_past_1,0.02099082146744695
+cat__shop_label_12,0.016270934574399144
+cat__category_kimono dress,0.014622676253240206
+cat__season_SS19,0.009981802874215646
+cat__fabric_tulle,0.009928389860835524
+num__year,0.009888538230828999
+cat__shop_label_36,0.008957309611203527
+cat__fabric_frise,0.008520002360228682
+cat__shop_label_80,0.00846331945428974
+cat__fabric_nice,0.0081362813615473
+cat__category_printed shirt,0.008002460897459969
+cat__category_long dress,0.007818906281603267
+cat__color_white,0.00632559269276353
+cat__shop_label_29,0.005745973097092065
+cat__category_short sleeves,0.005723275047271454
+cat__fabric_hron,0.0054140532993071245
+cat__fabric_acrylic,0.005336457583799347
+cat__category_culottes,0.005176876890833591
+cat__season_from_time_spring,0.005002120375934465
+cat__category_solid color top,0.004427925261705241
+cat__shop_label_30,0.004208650165771905
+cat__color_blue,0.004178001595571914
+cat__color_black,0.004053752790912404
+cat__shop_label_46,0.003857327378541231
+cat__fabric_polyviscous,0.003610761701637239
+cat__fabric_faux leather,0.0035281078834595975
+cat__fabric_lurex,0.0034843532977414725
+cat__category_doll dress,0.0031559931829709966
+cat__category_long sleeve,0.0030130856378602403
+cat__season_from_time_winter,0.0029775137776276096
+cat__shop_label_19,0.0028083356152259513
+cat__color_violet,0.002703392970467621
+cat__category_drop sleeve,0.002686422369146021
+cat__category_maxi,0.002541803133270878
+cat__shop_label_18,0.0022283303162994343
+cat__color_grey,0.0016239731692348869
+cat__category_sleeveless,0.001619463516516771
+cat__category_trapeze dress,0.0015673267977102227
+cat__fabric_foam rubber,0.0013348111153638456
+cat__category_patterned top,0.0009878700665973156
+cat__shop_label_64,0.0009100990843776913
+cat__fabric_georgette,0.0009059449591775319
+cat__fabric_cloth,0.0007277436558359114
+cat__fabric_scuba crepe,0.0006438177844436723
+cat__fabric_technical,0.0006209112650962197
+cat__color_brown,0.000605237018937396
+cat__fabric_silky satin,0.0005549422213474827
+cat__category_sheath dress,0.0005308355894259875
+cat__shop_label_43,0.0005266236677798588
+cat__shop_label_16,0.0005206100180133944
+cat__shop_label_41,0.0004936647582719161
+cat__shop_label_5,0.00044976399124250295
+cat__shop_label_14,0.00044140184440159374
+cat__shop_label_10,0.0004015558175764454
+cat__shop_label_15,0.0003884848038056589
+cat__fabric_matte jersey,0.0003384987179763357
+cat__color_yellow,0.000322811988866124
+cat__color_orange,0.0003046405846431298
+cat__shop_label_60,0.0002673699480181313
+cat__category_short cardigan,0.0002544222599656678
+cat__fabric_cotton,0.0002528121809797085
+cat__category_jumpsuit,0.00021919943714515284
+cat__shop_label_75,0.00020820098630756548
+cat__shop_label_17,0.00020463551330030896
+cat__shop_label_61,0.000203952469820797
+cat__shop_label_20,0.00018452445023112887
+cat__shop_label_24,0.00018054511247247548
+cat__fabric_milano stitch,0.0001802033292299484
+cat__color_red,0.0001647445259617598
+cat__shop_label_40,0.00016055393547940183
+cat__shop_label_54,0.00015824474483379163
+cat__color_green,0.00015448170745876267
+cat__category_medium coat,0.00014853233118847128
+cat__fabric_paillettes,0.00014573864529447746
+cat__shop_label_69,0.00013215655347103165
+cat__shop_label_62,0.00012438925488959284
+cat__category_long coat,0.0001225911482841184
+cat__fabric_devore,0.00011744015108779423
+cat__shop_label_77,0.00011528479604887707
+cat__shop_label_47,0.00010466561616369745
+cat__shop_label_7,0.0001012799598804122
+cat__shop_label_57,9.859141977594845e-05
+cat__shop_label_53,8.478186925021873e-05
+cat__fabric_light jeans,8.335766391846846e-05
+cat__fabric_bengaline,8.331225197110825e-05
+cat__fabric_dainetto,7.537873736364418e-05
+cat__shop_label_3,7.373539836617056e-05
+cat__shop_label_74,6.784891019538009e-05
+cat__fabric_dark jeans,6.257266132456607e-05
+cat__fabric_nylon,5.599537580874312e-05
+cat__shop_label_35,5.08077128874902e-05
+cat__shop_label_83,4.9798794421622005e-05
+cat__shop_label_90,4.907630176130624e-05
+cat__shop_label_8,4.6315412721924073e-05
+cat__shop_label_22,4.5373485352388346e-05
+cat__shop_label_59,4.528341119694233e-05
+cat__shop_label_13,4.4747817122811285e-05
+cat__shop_label_76,4.392466496610723e-05
+cat__shop_label_100,4.2328656545532796e-05
+cat__category_miniskirt,4.007845537971661e-05
+cat__shop_label_2,3.928488756536126e-05
+cat__shop_label_21,3.643055141710647e-05
+cat__category_long duster,3.509082795317227e-05
+cat__shop_label_73,3.308969801842068e-05
+cat__shop_label_1,3.2323783994775115e-05
+cat__shop_label_56,3.11556218460737e-05
+cat__fabric_crepe,3.017374168121023e-05
+cat__shop_label_84,3.010847871782971e-05
+cat__shop_label_66,2.81079777710147e-05
+cat__shop_label_9,2.7710284784279794e-05
+cat__shop_label_93,2.748831289463851e-05
+cat__shop_label_81,2.6788721952243578e-05
+cat__fabric_muslin cotton or silk,2.4856376453669782e-05
+cat__shop_label_32,2.347886947527513e-05
+cat__shop_label_65,2.23805812503997e-05
+cat__shop_label_86,2.060757821975585e-05
+cat__shop_label_51,1.9435737782305297e-05
+cat__shop_label_82,1.9352159071365804e-05
+cat__shop_label_4,1.6019858883373673e-05
+cat__shop_label_33,1.5427420276500924e-05
+cat__shop_label_63,1.238585156032741e-05
+cat__shop_label_0,1.1931991559993094e-05
+cat__shop_label_85,1.1295707746057814e-05
+cat__category_medium cardigan,1.0850768174918813e-05
+cat__shop_label_99,1.0099873413082606e-05
+cat__fabric_shiny jersey,9.306251976045132e-06
+cat__shop_label_31,8.89873240248562e-06
+cat__shop_label_101,7.99462153879631e-06
+cat__shop_label_68,7.5378397007625606e-06
+cat__shop_label_23,6.601569573626876e-06
+cat__fabric_plisse,5.54576897301331e-06
+cat__fabric_ottoman,4.555871139609735e-06
+cat__shop_label_28,4.430163251970498e-06
+cat__shop_label_39,3.420742577304736e-06
+cat__shop_label_79,3.044642443410339e-06
+cat__fabric_plush,2.7280837455236904e-06
+cat__shop_label_42,1.704791959798513e-06
+cat__shop_label_52,1.4692321085476579e-06
+cat__shop_label_6,1.4108807123193401e-06
+cat__shop_label_26,1.0534867702915562e-06
+cat__shop_label_45,8.634419438180885e-07
+cat__fabric_mutton,2.62043139088064e-07
+cat__season_AW19,0.0
+cat__fabric_cady,0.0
+cat__category_short coat,0.0
+cat__category_gitana skirt,0.0
+cat__category_long cardigan,0.0
+num__day_of_week,0.0
+cat__fabric_viscose twill,0.0
+cat__fabric_velvet,0.0
+cat__shop_label_11,0.0
+cat__fabric_jacquard,0.0
+cat__fabric_lace,0.0
+cat__fabric_fur,0.0
+cat__fabric_ity,0.0
+cat__fabric_embossed,0.0
+cat__fabric_fluid,0.0
+cat__fabric_marocain,0.0
+cat__fabric_piquet,0.0
+cat__shop_label_27,0.0
+cat__shop_label_25,0.0
+cat__shop_label_58,0.0
+cat__shop_label_48,0.0
+cat__shop_label_38,0.0
+cat__shop_label_44,0.0
+cat__shop_label_49,0.0
+cat__shop_label_50,0.0
+cat__shop_label_67,0.0
+cat__shop_label_72,0.0
+cat__shop_label_95,0.0
+cat__shop_label_102,0.0
+cat__shop_label_104,0.0
+cat__shop_label_107,0.0
+cat__shop_label_109,0.0
+cat__shop_label_110,0.0

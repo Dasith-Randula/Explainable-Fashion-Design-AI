@@ -23,7 +23,12 @@ from typing import Optional
 
 import pandas as pd
 
-from .shap_explainer import explain_row, global_feature_importance, predict_explained_output
+from .shap_explainer import (
+    check_shap_prediction_consistency,
+    explain_row,
+    global_feature_importance,
+    predict_explained_output,
+)
 from .refinement import (
     MUTABLE_DESIGN_ATTRIBUTES,
     apply_refinement,
@@ -110,6 +115,19 @@ def run_closed_loop(
         Computed on ``X`` automatically if not supplied (slower, since it
         re-runs SHAP over the whole sample).
     """
+    consistency = check_shap_prediction_consistency(
+        pipeline,
+        X,
+        row_index=row_index,
+    )
+    if not consistency["consistent"]:
+        raise RuntimeError(
+            "Closed-loop refinement stopped because SHAP reconstruction is inconsistent. "
+            f"actual_prediction={consistency['actual_prediction']}, "
+            f"reconstructed_prediction={consistency['reconstructed_prediction']}, "
+            f"difference={consistency['difference']}"
+        )
+
     if importance_table is None:
         importance_table = global_feature_importance(pipeline, X)
 

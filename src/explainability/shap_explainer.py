@@ -83,7 +83,7 @@ class ExplanationResult:
 class ShapAnalysisBundle:
     values: np.ndarray
     feature_names: list
-    base_value: float
+    base_values: np.ndarray
     explainer: Any
     output_type: str
 
@@ -91,11 +91,12 @@ class ShapAnalysisBundle:
         if row_index < 0 or row_index >= len(X):
             raise IndexError(f"row_index {row_index} is out of range for {len(X)} rows.")
         shap_vector = np.asarray(self.values[row_index], dtype=float)
-        predicted_value = float(self.base_value + shap_vector.sum())
+        row_base_value = float(self.base_values[row_index])
+        predicted_value = float(row_base_value + shap_vector.sum())
         return ExplanationResult(
             feature_names=self.feature_names,
             shap_values=shap_vector,
-            base_value=self.base_value,
+            base_value=row_base_value,
             predicted_value=predicted_value,
             raw_row=X.iloc[row_index],
             output_type=self.output_type,
@@ -139,6 +140,14 @@ def _is_classifier(model: Any) -> bool:
     return hasattr(model, "predict_proba") and hasattr(model, "classes_")
 
 
+def _is_xgboost_regressor(model: Any) -> bool:
+    return (
+        type(model).__module__.startswith("xgboost")
+        and not _is_classifier(model)
+        and hasattr(model, "get_booster")
+    )
+
+
 def _positive_class_index(model: Any) -> int:
     classes = getattr(model, "classes_", None)
     if classes is None:
@@ -169,13 +178,15 @@ def predict_explained_output(pipeline, X: pd.DataFrame):
     return np.asarray(pipeline.predict(X), dtype=float)
 
 
-def transform_features(pipeline, X: pd.DataFrame) -> tuple:
+def transform_features(pipeline, X: pd.DataFrame, dense: bool = True) -> tuple:
     prep, _ = resolve_pipeline_steps(pipeline)
     transformed = prep.transform(X)
-    if hasattr(transformed, "toarray"):
+    if dense and hasattr(transformed, "toarray"):
         transformed = transformed.toarray()
     feature_names = list(prep.get_feature_names_out())
-    return np.asarray(transformed, dtype=float), feature_names
+    if dense:
+        transformed = np.asarray(transformed, dtype=float)
+    return transformed, feature_names
 
 
 def build_explainer(pipeline, background: Optional[pd.DataFrame] = None):
@@ -210,34 +221,72 @@ def _normalize_shap_values(raw_values, feature_names: list, model: Any, output_t
     return values
 
 
-def _normalize_base_value(raw_base, model: Any, output_type: str):
+def _normalize_base_values(raw_base, model: Any, output_type: str, n_samples: int):
     if raw_base is None:
-        return 0.0
+        return np.zeros(n_samples, dtype=float)
     base_values = np.asarray(raw_base, dtype=float)
     if base_values.ndim == 0:
-        return float(base_values)
-    if _is_classifier(model):
+        return np.full(n_samples, float(base_values), dtype=float)
+    if _is_classifier(model) and base_values.ndim > 1 and base_values.shape[-1] > 1:
         pos_idx = _positive_class_index(model)
-        if base_values.ndim > 1 and base_values.shape[-1] > 1:
-            return float(np.mean(base_values[:, pos_idx]))
-        return float(np.mean(base_values))
-    if base_values.ndim > 1:
-        return float(np.mean(base_values))
-    return float(np.mean(base_values))
+        base_values = base_values[:, pos_idx]
+    base_values = np.asarray(base_values, dtype=float).reshape(-1)
+    if base_values.size == 1:
+        return np.full(n_samples, float(base_values[0]), dtype=float)
+    if base_values.size != n_samples:
+        raise ValueError(
+            f"SHAP base values must resolve to one value per sample ({n_samples}); got shape {np.asarray(raw_base).shape}."
+        )
+    return base_values
 
 
 def compute_shap_values(pipeline, X: pd.DataFrame, output_type: Optional[str] = None):
-    transformed, feature_names = transform_features(pipeline, X)
     _, model = resolve_pipeline_steps(pipeline)
     if output_type is None:
         output_type = "regression_prediction" if not _is_classifier(model) else "positive_class_probability"
+
+    if _is_xgboost_regressor(model):
+        import xgboost as xgb
+
+        transformed, feature_names = transform_features(pipeline, X, dense=False)
+        pipeline_predictions = np.asarray(predict_explained_output(pipeline, X), dtype=float).reshape(-1)
+        estimator_predictions = np.asarray(model.predict(transformed), dtype=float).reshape(-1)
+        if not np.allclose(pipeline_predictions, estimator_predictions, atol=1e-3, rtol=0.0):
+            raise RuntimeError("Pipeline prediction and estimator prediction are not aligned.")
+
+        booster = model.get_booster()
+        contributions = np.asarray(
+            booster.predict(xgb.DMatrix(transformed), pred_contribs=True),
+            dtype=float,
+        )
+        if contributions.ndim != 2 or contributions.shape[1] != len(feature_names) + 1:
+            raise RuntimeError(
+                "XGBoost native SHAP contributions did not return the expected feature contributions and bias column."
+            )
+
+        values = contributions[:, :-1]
+        base_values = contributions[:, -1]
+        contribution_predictions = contributions.sum(axis=1)
+        if not np.allclose(contribution_predictions, pipeline_predictions, atol=1e-3, rtol=0.0):
+            raise RuntimeError(
+                "XGBoost native SHAP contributions do not reconstruct estimator predictions within 1e-3."
+            )
+
+        return values, feature_names, base_values, booster, output_type
+
+    transformed, feature_names = transform_features(pipeline, X)
     explainer = build_explainer(pipeline, background=transformed)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         explanation = explainer(transformed)
     values = _normalize_shap_values(explanation.values, feature_names, model, output_type)
-    base_value = _normalize_base_value(getattr(explanation, "base_values", 0.0), model, output_type)
-    return values, feature_names, base_value, explainer, output_type
+    base_values = _normalize_base_values(
+        getattr(explanation, "base_values", 0.0),
+        model,
+        output_type,
+        len(X),
+    )
+    return values, feature_names, base_values, explainer, output_type
 
 
 def global_feature_importance(pipeline, X: pd.DataFrame) -> pd.DataFrame:
@@ -250,13 +299,14 @@ def global_feature_importance(pipeline, X: pd.DataFrame) -> pd.DataFrame:
 def explain_row(pipeline, X: pd.DataFrame, row_index: int = 0) -> ExplanationResult:
     if row_index < 0 or row_index >= len(X):
         raise IndexError(f"row_index {row_index} is out of range for {len(X)} rows.")
-    values, feature_names, base_value, _, output_type = compute_shap_values(pipeline, X)
+    values, feature_names, base_values, _, output_type = compute_shap_values(pipeline, X)
     shap_vector = np.asarray(values[row_index], dtype=float)
-    predicted_value = float(base_value + shap_vector.sum())
+    row_base_value = float(base_values[row_index])
+    predicted_value = float(row_base_value + shap_vector.sum())
     return ExplanationResult(
         feature_names=feature_names,
         shap_values=shap_vector,
-        base_value=base_value,
+        base_value=row_base_value,
         predicted_value=predicted_value,
         raw_row=X.iloc[row_index],
         output_type=output_type,
@@ -280,6 +330,12 @@ def check_shap_prediction_consistency(
     actual_prediction = float(predict_explained_output(pipeline, row)[0])
     reconstructed_prediction = reconstruct_prediction_from_shap(explanation)
     difference = abs(actual_prediction - reconstructed_prediction)
+    _, model = resolve_pipeline_steps(pipeline)
+    if _is_classifier(model) and difference > tolerance:
+        raise ValueError(
+            "Unsupported SHAP output scale for classifier consistency: the explainer output "
+            "does not match the positive-class probability returned by predict_explained_output()."
+        )
     status = difference <= tolerance
     return {
         "row_index": row_index,
