@@ -1,0 +1,201 @@
+row_index,original_score,refined_score,score_delta,improved,n_suggestions,prompt_hints
+0,1.6676428318023682,1.684867262840271,0.017224431037902832,True,1,use white instead of brown for the color
+1,2.397891044616699,2.6640779972076416,0.2661869525909424,True,2,use white instead of black for the color; use spring instead of winter for the season_from_time
+2,1.018449306488037,1.5331099033355713,0.5146605968475342,True,3,use tulle instead of hron for the fabric; use white instead of violet for the color; use printed shirt instead of long sleeve for the category
+3,0.785198986530304,0.785198986530304,0.0,False,0,
+4,1.4481419324874878,1.7764537334442139,0.3283118009567261,True,1,use printed shirt instead of culottes for the category
+5,1.3419660329818726,1.4130829572677612,0.07111692428588867,True,2,use white instead of black for the color; use printed shirt instead of sheath dress for the category
+6,1.0735799074172974,1.0735799074172974,0.0,False,0,
+7,1.0707406997680664,1.1148544549942017,0.044113755226135254,True,1,use white instead of black for the color
+8,0.641390860080719,0.641390860080719,0.0,False,0,
+9,1.6768372058868408,1.7493364810943604,0.07249927520751953,True,1,use white instead of grey for the color
+10,0.6808231472969055,0.893471360206604,0.2126482129096985,True,3,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category; use spring instead of winter for the season_from_time
+11,0.7655604481697083,0.7655604481697083,0.0,False,0,
+12,0.6062242388725281,0.9099380373954773,0.3037137985229492,True,3,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category; use spring instead of winter for the season_from_time
+13,0.8466123342514038,1.003872275352478,0.15725994110107422,True,1,use tulle instead of polyviscous for the fabric
+14,0.9113007187843323,1.0481561422348022,0.13685542345046997,True,1,use tulle instead of nice for the fabric
+15,0.7330361604690552,0.7330361604690552,0.0,False,1,use 12 instead of 77 for the shop_label
+16,1.0355069637298584,1.2170037031173706,0.1814967393875122,True,2,use tulle instead of nice for the fabric; use spring instead of winter for the season_from_time
+17,0.654339611530304,1.0110845565795898,0.3567449450492859,True,3,use tulle instead of nice for the fabric; use white instead of brown for the color; use printed shirt instead of long sleeve for the category
+18,2.1657798290252686,2.1657798290252686,0.0,False,0,
+19,1.8072080612182617,1.8072080612182617,0.0,False,0,
+20,0.34696850180625916,0.34696850180625916,0.0,False,0,
+21,0.7079810500144958,0.7079810500144958,0.0,False,0,
+22,0.7888720631599426,0.7888720631599426,0.0,False,0,
+23,2.03377628326416,2.03377628326416,0.0,False,0,
+24,0.8722454309463501,1.0880792140960693,0.21583378314971924,True,2,use tulle instead of cotton for the fabric; use printed shirt instead of culottes for the category
+25,0.43523794412612915,0.43523794412612915,0.0,False,0,
+26,0.6612881422042847,0.910029947757721,0.24874180555343628,True,1,use tulle instead of foam rubber for the fabric
+27,0.7543472647666931,0.9104313850402832,0.1560841202735901,True,2,use tulle instead of nice for the fabric; use 12 instead of 56 for the shop_label
+28,0.6530882120132446,0.959584653377533,0.30649644136428833,True,1,use printed shirt instead of culottes for the category
+29,1.1960457563400269,1.0115350484848022,-0.1845107078552246,False,1,use spring instead of winter for the season_from_time
+30,0.5742975473403931,0.7673537731170654,0.19305622577667236,True,2,use tulle instead of nice for the fabric; use 12 instead of 2 for the shop_label
+31,0.7324173450469971,0.7324173450469971,0.0,False,1,use 12 instead of 77 for the shop_label
+32,0.8762375712394714,0.8762375712394714,0.0,False,0,
+33,1.6732887029647827,1.6732887029647827,0.0,False,1,use 12 instead of 31 for the shop_label
+34,0.6167267560958862,0.7454500794410706,0.12872332334518433,True,1,use tulle instead of nice for the fabric
+35,1.126722812652588,1.126722812652588,0.0,False,0,
+36,1.751395583152771,1.7604479789733887,0.009052395820617676,True,1,use white instead of black for the color
+37,0.9788269996643066,1.3410069942474365,0.3621799945831299,True,2,use tulle instead of cotton for the fabric; use printed shirt instead of long coat for the category
+38,0.5656076669692993,0.8334972262382507,0.2678895592689514,True,3,use tulle instead of hron for the fabric; use white instead of grey for the color; use spring instead of winter for the season_from_time
+39,1.0956313610076904,1.5150154829025269,0.4193841218948364,True,3,use tulle instead of nice for the fabric; use white instead of violet for the color; use printed shirt instead of long sleeve for the category
+40,0.8859029412269592,1.2817630767822266,0.39586013555526733,True,3,use tulle instead of nice for the fabric; use 12 instead of 13 for the shop_label; use printed shirt instead of culottes for the category
+41,1.192975640296936,1.478530764579773,0.2855551242828369,True,2,use white instead of blue for the color; use printed shirt instead of culottes for the category
+42,1.8083199262619019,1.7044322490692139,-0.10388767719268799,False,2,use white instead of black for the color; use spring instead of winter for the season_from_time
+43,1.8184809684753418,2.0176024436950684,0.19912147521972656,True,1,use printed shirt instead of culottes for the category
+44,1.0088152885437012,1.2383787631988525,0.22956347465515137,True,3,use tulle instead of nice for the fabric; use white instead of brown for the color; use printed shirt instead of long sleeve for the category
+45,1.2958816289901733,1.5004578828811646,0.2045762538909912,True,1,use white instead of grey for the color
+46,0.8398342728614807,0.8398342728614807,0.0,False,0,
+47,0.970651388168335,1.2446911334991455,0.27403974533081055,True,2,use printed shirt instead of culottes for the category; use 12 instead of 61 for the shop_label
+48,1.2856426239013672,1.4168304204940796,0.1311877965927124,True,3,use tulle instead of hron for the fabric; use white instead of grey for the color; use printed shirt instead of long sleeve for the category
+49,0.48682841658592224,0.49226686358451843,0.005438446998596191,True,1,use white instead of black for the color
+50,0.41780218482017517,0.7535735368728638,0.3357713520526886,True,3,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category; use white instead of brown for the color
+51,1.4027355909347534,1.4809808731079102,0.07824528217315674,True,2,use white instead of grey for the color; use printed shirt instead of culottes for the category
+52,3.0305488109588623,3.0305488109588623,0.0,False,1,use 12 instead of 13 for the shop_label
+53,1.3850347995758057,1.3673537969589233,-0.017681002616882324,False,1,use spring instead of winter for the season_from_time
+54,0.8473320007324219,1.143166184425354,0.29583418369293213,True,2,use printed shirt instead of culottes for the category; use 12 instead of 66 for the shop_label
+55,0.5839475393295288,0.5839475393295288,0.0,False,0,
+56,0.8094813227653503,0.8094813227653503,0.0,False,0,
+57,0.6895819306373596,0.6895819306373596,0.0,False,0,
+58,2.0855143070220947,2.125556707382202,0.04004240036010742,True,1,use white instead of blue for the color
+59,1.1786991357803345,1.2017711400985718,0.023072004318237305,True,1,use white instead of grey for the color
+60,0.8052203059196472,1.1421703100204468,0.33695000410079956,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+61,0.614945650100708,0.7975782155990601,0.18263256549835205,True,1,use tulle instead of nice for the fabric
+62,1.5335431098937988,1.5335431098937988,0.0,False,0,
+63,0.9453630447387695,0.9453630447387695,0.0,False,0,
+64,1.0609757900238037,1.1513464450836182,0.09037065505981445,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+65,0.8406969904899597,0.8406969904899597,0.0,False,0,
+66,0.5933866500854492,0.7887914776802063,0.19540482759475708,True,2,use tulle instead of foam rubber for the fabric; use 12 instead of 59 for the shop_label
+67,1.286041259765625,1.9284130334854126,0.6423717737197876,True,1,use printed shirt instead of culottes for the category
+68,0.8272730112075806,0.8272730112075806,0.0,False,1,use 12 instead of 59 for the shop_label
+69,1.4654368162155151,1.4654368162155151,0.0,False,0,
+70,0.9411014318466187,0.9411014318466187,0.0,False,0,
+71,1.1985725164413452,1.339381456375122,0.14080893993377686,True,3,use printed shirt instead of long sleeve for the category; use 12 instead of 56 for the shop_label; use spring instead of winter for the season_from_time
+72,1.0271022319793701,1.1688023805618286,0.1417001485824585,True,2,use printed shirt instead of culottes for the category; use spring instead of winter for the season_from_time
+73,1.1398259401321411,1.1398259401321411,0.0,False,0,
+74,0.8069584965705872,0.7974011301994324,-0.009557366371154785,False,2,use 12 instead of 1 for the shop_label; use spring instead of winter for the season_from_time
+75,2.614267587661743,2.669795513153076,0.05552792549133301,True,1,use white instead of black for the color
+76,1.6981830596923828,1.6981830596923828,0.0,False,1,use 12 instead of 66 for the shop_label
+77,1.403732419013977,1.2327276468276978,-0.1710047721862793,False,3,use white instead of brown for the color; use 12 instead of 26 for the shop_label; use spring instead of winter for the season_from_time
+78,1.6692639589309692,1.6692639589309692,0.0,False,0,
+79,0.8189685940742493,0.9743831157684326,0.15541452169418335,True,1,use printed shirt instead of culottes for the category
+80,1.8543248176574707,2.1594786643981934,0.30515384674072266,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+81,0.848766565322876,0.848766565322876,0.0,False,0,
+82,0.7575204372406006,0.8035256266593933,0.046005189418792725,True,1,use white instead of grey for the color
+83,0.856772780418396,1.13079833984375,0.274025559425354,True,1,use tulle instead of hron for the fabric
+84,0.7177846431732178,0.9927199482917786,0.2749353051185608,True,3,use tulle instead of cotton for the fabric; use white instead of black for the color; use printed shirt instead of long coat for the category
+85,1.1449264287948608,1.270766258239746,0.12583982944488525,True,3,use white instead of blue for the color; use printed shirt instead of culottes for the category; use spring instead of winter for the season_from_time
+86,0.8320954442024231,0.9653254151344299,0.13322997093200684,True,1,use printed shirt instead of culottes for the category
+87,0.7177464962005615,1.0550365447998047,0.33729004859924316,True,2,use tulle instead of hron for the fabric; use white instead of grey for the color
+88,1.1464588642120361,1.2241766452789307,0.07771778106689453,True,2,use white instead of brown for the color; use spring instead of winter for the season_from_time
+89,0.6584628224372864,0.6584628224372864,0.0,False,0,
+90,1.8218512535095215,1.984784483909607,0.16293323040008545,True,1,use white instead of grey for the color
+91,0.7060893177986145,0.7241224050521851,0.018033087253570557,True,1,use white instead of grey for the color
+92,1.8138526678085327,1.9038991928100586,0.09004652500152588,True,1,use white instead of black for the color
+93,0.7547460198402405,0.7547460198402405,0.0,False,0,
+94,0.5889885425567627,0.7881898880004883,0.19920134544372559,True,1,use tulle instead of nice for the fabric
+95,2.2332632541656494,2.12221622467041,-0.11104702949523926,False,1,use spring instead of winter for the season_from_time
+96,2.1748223304748535,2.5383026599884033,0.3634803295135498,True,2,use printed shirt instead of culottes for the category; use white instead of black for the color
+97,0.8437783718109131,1.108270525932312,0.2644921541213989,True,1,use printed shirt instead of long sleeve for the category
+98,0.6730279922485352,0.6521058082580566,-0.020922183990478516,False,1,use 12 instead of 5 for the shop_label
+99,0.32003241777420044,0.5903522968292236,0.2703198790550232,True,3,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category; use 12 instead of 61 for the shop_label
+100,1.3271472454071045,1.2160998582839966,-0.11104738712310791,False,1,use spring instead of winter for the season_from_time
+101,0.7699944972991943,0.8243479132652283,0.054353415966033936,True,2,use white instead of blue for the color; use 12 instead of 31 for the shop_label
+102,0.7967715263366699,0.7967715263366699,0.0,False,0,
+103,0.6710014343261719,0.8841401934623718,0.21313875913619995,True,1,use printed shirt instead of long sleeve for the category
+104,1.6007933616638184,1.5441304445266724,-0.056662917137145996,False,1,use 12 instead of 19 for the shop_label
+105,1.4499707221984863,1.493513584136963,0.04354286193847656,True,1,use printed shirt instead of long sleeve for the category
+106,0.7274786233901978,0.8400962948799133,0.11261767148971558,True,1,use printed shirt instead of culottes for the category
+107,1.1584733724594116,1.2016092538833618,0.043135881423950195,True,1,use white instead of grey for the color
+108,0.6767072677612305,1.098845362663269,0.4221380949020386,True,1,use printed shirt instead of culottes for the category
+109,1.4647289514541626,1.6346044540405273,0.16987550258636475,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+110,0.6127491593360901,1.0376168489456177,0.4248676896095276,True,3,use tulle instead of hron for the fabric; use white instead of grey for the color; use printed shirt instead of long sleeve for the category
+111,0.8132898807525635,0.8132898807525635,0.0,False,0,
+112,0.9414718747138977,1.0773966312408447,0.13592475652694702,True,1,use printed shirt instead of long sleeve for the category
+113,1.812281608581543,1.812281608581543,0.0,False,0,
+114,0.6975982189178467,0.9320691227912903,0.2344709038734436,True,2,use printed shirt instead of long sleeve for the category; use spring instead of winter for the season_from_time
+115,0.9369283318519592,1.2164878845214844,0.27955955266952515,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+116,0.9915435314178467,1.1257762908935547,0.134232759475708,True,1,use tulle instead of nice for the fabric
+117,1.6665070056915283,1.7190109491348267,0.05250394344329834,True,1,use white instead of violet for the color
+118,1.175269365310669,1.175269365310669,0.0,False,0,
+119,0.9145565032958984,1.0279481410980225,0.11339163780212402,True,1,use printed shirt instead of long sleeve for the category
+120,0.7626342177391052,0.7626342177391052,0.0,False,0,
+121,1.6057281494140625,1.7251904010772705,0.11946225166320801,True,2,use tulle instead of nice for the fabric; use white instead of brown for the color
+122,1.3680140972137451,1.3586276769638062,-0.009386420249938965,False,1,use spring instead of winter for the season_from_time
+123,0.3990960121154785,0.7500144243240356,0.35091841220855713,True,2,use white instead of blue for the color; use tulle instead of foam rubber for the fabric
+124,1.3062949180603027,1.2996933460235596,-0.006601572036743164,False,2,use white instead of brown for the color; use spring instead of winter for the season_from_time
+125,0.8055955767631531,1.039262294769287,0.23366671800613403,True,3,use tulle instead of foam rubber for the fabric; use spring instead of winter for the season_from_time; use printed shirt instead of long coat for the category
+126,0.8464054465293884,1.0742186307907104,0.22781318426132202,True,3,use tulle instead of nice for the fabric; use 12 instead of 74 for the shop_label; use printed shirt instead of long sleeve for the category
+127,2.2088541984558105,2.2088541984558105,0.0,False,0,
+128,0.9307767152786255,1.0358741283416748,0.10509741306304932,True,1,use printed shirt instead of long sleeve for the category
+129,1.2032679319381714,1.0779296159744263,-0.12533831596374512,False,1,use spring instead of winter for the season_from_time
+130,0.909557044506073,1.1735444068908691,0.26398736238479614,True,1,use printed shirt instead of long sleeve for the category
+131,0.9032332897186279,0.910976767539978,0.007743477821350098,True,1,use white instead of brown for the color
+132,0.3983903229236603,0.6860010623931885,0.2876107394695282,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+133,0.9779359698295593,0.9779359698295593,0.0,False,1,use 12 instead of 33 for the shop_label
+134,0.7621311545372009,0.7621311545372009,0.0,False,0,
+135,1.4461910724639893,1.7237440347671509,0.2775529623031616,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+136,0.784203052520752,0.9160909652709961,0.13188791275024414,True,3,use printed shirt instead of long coat for the category; use 12 instead of 56 for the shop_label; use spring instead of winter for the season_from_time
+137,1.2029011249542236,1.2841150760650635,0.08121395111083984,True,2,use white instead of brown for the color; use spring instead of winter for the season_from_time
+138,1.8632011413574219,1.8867225646972656,0.02352142333984375,True,1,use white instead of grey for the color
+139,0.704901397228241,0.9157892465591431,0.2108878493309021,True,2,use tulle instead of nice for the fabric; use white instead of brown for the color
+140,0.5102455019950867,1.055773377418518,0.5455278754234314,True,3,use tulle instead of foam rubber for the fabric; use white instead of black for the color; use printed shirt instead of long coat for the category
+141,0.8826232552528381,1.0290312767028809,0.14640802145004272,True,2,use tulle instead of foam rubber for the fabric; use spring instead of winter for the season_from_time
+142,0.593002200126648,0.9463052749633789,0.35330307483673096,True,3,use tulle instead of hron for the fabric; use white instead of grey for the color; use 12 instead of 56 for the shop_label
+143,1.743019461631775,1.743019461631775,0.0,False,0,
+144,0.6913890242576599,0.8352755308151245,0.1438865065574646,True,2,use 12 instead of 5 for the shop_label; use white instead of brown for the color
+145,0.7348423004150391,0.9510425329208374,0.21620023250579834,True,3,use tulle instead of nice for the fabric; use 12 instead of 5 for the shop_label; use white instead of brown for the color
+146,0.72685307264328,1.1786266565322876,0.45177358388900757,True,3,use tulle instead of nice for the fabric; use printed shirt instead of sleeveless for the category; use spring instead of winter for the season_from_time
+147,1.347402811050415,1.6789345741271973,0.3315317630767822,True,1,use printed shirt instead of culottes for the category
+148,1.032211184501648,1.154955267906189,0.12274408340454102,True,1,use printed shirt instead of long coat for the category
+149,0.7114212512969971,0.7114212512969971,0.0,False,0,
+150,1.2290924787521362,1.9767347574234009,0.7476422786712646,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+151,0.6161633729934692,1.1610456705093384,0.5448822975158691,True,3,use tulle instead of foam rubber for the fabric; use white instead of black for the color; use printed shirt instead of long coat for the category
+152,0.7697049379348755,0.9684534668922424,0.19874852895736694,True,2,use white instead of blue for the color; use printed shirt instead of culottes for the category
+153,0.8414446711540222,1.2182815074920654,0.3768368363380432,True,3,use tulle instead of nice for the fabric; use 12 instead of 41 for the shop_label; use printed shirt instead of culottes for the category
+154,1.1721456050872803,1.4701526165008545,0.2980070114135742,True,1,use white instead of brown for the color
+155,1.2381727695465088,1.3721623420715332,0.13398957252502441,True,1,use printed shirt instead of long sleeve for the category
+156,1.013896107673645,1.1051589250564575,0.0912628173828125,True,2,use white instead of grey for the color; use spring instead of winter for the season_from_time
+157,1.3804222345352173,1.4559067487716675,0.0754845142364502,True,2,use white instead of brown for the color; use tulle instead of frise for the fabric
+158,0.6244657039642334,0.8324988484382629,0.20803314447402954,True,1,use tulle instead of foam rubber for the fabric
+159,1.2758570909500122,1.2758570909500122,0.0,False,0,
+160,1.1779398918151855,1.2480435371398926,0.07010364532470703,True,1,use printed shirt instead of long sleeve for the category
+161,1.1489149332046509,1.361178994178772,0.2122640609741211,True,3,use tulle instead of foam rubber for the fabric; use white instead of black for the color; use spring instead of winter for the season_from_time
+162,1.2753034830093384,1.411457896232605,0.1361544132232666,True,1,use white instead of brown for the color
+163,0.888098955154419,0.9658164381980896,0.07771748304367065,True,1,use white instead of brown for the color
+164,1.0233513116836548,1.0202651023864746,-0.0030862092971801758,False,1,use white instead of black for the color
+165,1.6846606731414795,1.6750280857086182,-0.009632587432861328,False,2,use tulle instead of hron for the fabric; use white instead of grey for the color
+166,0.6995152235031128,0.9423946738243103,0.2428794503211975,True,2,use white instead of brown for the color; use tulle instead of foam rubber for the fabric
+167,0.8776848316192627,1.164528489112854,0.2868436574935913,True,1,use printed shirt instead of culottes for the category
+168,2.765507936477661,3.0346546173095703,0.2691466808319092,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+169,0.7312268018722534,1.1108665466308594,0.37963974475860596,True,2,use tulle instead of nice for the fabric; use white instead of brown for the color
+170,0.7075368165969849,0.7303553819656372,0.022818565368652344,True,1,use white instead of brown for the color
+171,1.353638768196106,1.5306435823440552,0.17700481414794922,True,3,use white instead of grey for the color; use 12 instead of 33 for the shop_label; use spring instead of winter for the season_from_time
+172,0.3412339985370636,0.44963571429252625,0.10840171575546265,True,1,use tulle instead of foam rubber for the fabric
+173,1.0915510654449463,1.1422185897827148,0.050667524337768555,True,1,use tulle instead of cotton for the fabric
+174,1.0378865003585815,1.482800841331482,0.4449143409729004,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+175,0.7229555249214172,0.8612282872200012,0.13827276229858398,True,2,use white instead of grey for the color; use printed shirt instead of culottes for the category
+176,0.989346981048584,1.2147525548934937,0.22540557384490967,True,1,use printed shirt instead of long sleeve for the category
+177,1.0725550651550293,1.0822125673294067,0.009657502174377441,True,1,use printed shirt instead of sheath dress for the category
+178,0.7394726276397705,0.7178010940551758,-0.021671533584594727,False,1,use spring instead of winter for the season_from_time
+179,1.4825130701065063,1.4530845880508423,-0.029428482055664062,False,2,use 12 instead of 74 for the shop_label; use spring instead of winter for the season_from_time
+180,1.4856586456298828,1.4856586456298828,0.0,False,0,
+181,0.4869959056377411,0.4924343526363373,0.005438446998596191,True,1,use white instead of black for the color
+182,0.7175495624542236,0.8489816784858704,0.13143211603164673,True,2,use printed shirt instead of long coat for the category; use spring instead of winter for the season_from_time
+183,2.46305251121521,2.46305251121521,0.0,False,0,
+184,0.7757725119590759,0.8189082741737366,0.043135762214660645,True,1,use white instead of grey for the color
+185,1.4208078384399414,1.4063591957092285,-0.01444864273071289,False,1,use printed shirt instead of long sleeve for the category
+186,0.987995445728302,0.987995445728302,0.0,False,0,
+187,0.6628043055534363,0.9826380014419556,0.3198336958885193,True,3,use tulle instead of nice for the fabric; use white instead of grey for the color; use printed shirt instead of long sleeve for the category
+188,0.7503831386566162,1.0419076681137085,0.2915245294570923,True,3,use tulle instead of nice for the fabric; use white instead of grey for the color; use printed shirt instead of long sleeve for the category
+189,0.41889867186546326,0.7724487781524658,0.35355010628700256,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+190,1.6962567567825317,1.6962567567825317,0.0,False,1,use 12 instead of 26 for the shop_label
+191,0.8517217636108398,1.0095045566558838,0.15778279304504395,True,3,use tulle instead of foam rubber for the fabric; use printed shirt instead of long coat for the category; use spring instead of winter for the season_from_time
+192,0.5949339270591736,0.5949339270591736,0.0,False,0,
+193,0.8146770000457764,0.8146770000457764,0.0,False,0,
+194,1.1733497381210327,1.216485619544983,0.043135881423950195,True,1,use white instead of grey for the color
+195,1.6429306268692017,1.6429306268692017,0.0,False,0,
+196,0.7419853806495667,1.2354768514633179,0.4934914708137512,True,3,use tulle instead of hron for the fabric; use printed shirt instead of long sleeve for the category; use spring instead of winter for the season_from_time
+197,1.1951799392700195,1.4566185474395752,0.26143860816955566,True,2,use tulle instead of nice for the fabric; use printed shirt instead of long sleeve for the category
+198,0.6512885093688965,0.6512885093688965,0.0,False,0,
+199,0.6366345882415771,0.7567579746246338,0.12012338638305664,True,1,use tulle instead of nice for the fabric
