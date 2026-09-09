@@ -4,26 +4,12 @@ SHAP-based explainability for the demand / preference scoring models.
 Owner: Dewmi
 Module: CCS4310 - Deep Learning
 Project: Explainable-Fashion-Design-AI
-
-This module is intentionally generic: it works on any fitted scikit-learn
-``Pipeline`` that exposes a ``prep`` step (a ``ColumnTransformer``) and a
-``model`` step (a tree-based estimator such as XGBoost, LightGBM or
-RandomForest). That is exactly the shape of the pipelines saved by the
-demand-forecasting notebook (``models/demand/best_demand_model.joblib``) and
-is the shape expected from the customer-preference notebook once a tree
-model is selected as the winner.
-
-The functions here do not read or write files on their own (except for the
-small convenience helpers at the bottom): they take a fitted pipeline and a
-raw feature DataFrame and return SHAP values / explanations so that they can
-be reused from a notebook, a script, or (later) the backend explainability
-service described in the project README.
 """
 
 from __future__ import annotations
 
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Optional
 
@@ -46,30 +32,20 @@ TREE_MODEL_MODULES = (
     "sklearn.tree",
 )
 
+PREPROCESSOR_ALIASES = ("prep", "preprocess", "preprocessor")
+ESTIMATOR_ALIASES = ("model", "classifier", "estimator")
+
 
 @dataclass
 class ExplanationResult:
-    """Container for a single-row (local) SHAP explanation."""
-
     feature_names: list
     shap_values: np.ndarray
     base_value: float
     predicted_value: float
     raw_row: pd.Series
+    output_type: str = "regression_prediction"
 
     def attribute_contributions(self, categorical_features: list) -> pd.DataFrame:
-        """SHAP contribution of each attribute's *currently active* value.
-
-        For one-hot encoded categorical columns, SHAP can assign a non-zero
-        value to a dummy column even when it is not active for this row
-        (tree interaction effects). Ranking raw one-hot columns by SHAP
-        value can therefore point at a category the design does not even
-        have. This method instead looks up, for every attribute in
-        ``categorical_features``, the one-hot column that matches this
-        row's actual value (from ``raw_row``) and reports only that
-        column's SHAP value - the correct "how much is what this design
-        currently has hurting/helping the score" answer.
-        """
         rows = []
         name_to_value = dict(zip(self.feature_names, self.shap_values))
         for attribute in categorical_features:
@@ -79,8 +55,6 @@ class ExplanationResult:
             feature_name = f"cat__{attribute}_{current_value}"
             shap_value = name_to_value.get(feature_name)
             if shap_value is None:
-                # Category unseen at fit time (handle_unknown='ignore') or a
-                # different one-hot naming scheme; skip rather than guess.
                 continue
             rows.append(
                 {
@@ -95,65 +69,108 @@ class ExplanationResult:
         return frame
 
     def top_contributions(self, n: int = 5, direction: str = "both") -> pd.DataFrame:
-        """Return the ``n`` largest SHAP contributions for this row.
-
-        Parameters
-        ----------
-        direction:
-            ``"positive"`` returns only features pushing the prediction up,
-            ``"negative"`` returns only features pushing it down, ``"both"``
-            (default) ranks by absolute magnitude regardless of sign.
-        """
-        frame = pd.DataFrame(
-            {"feature": self.feature_names, "shap_value": self.shap_values}
-        )
+        frame = pd.DataFrame({"feature": self.feature_names, "shap_value": self.shap_values})
         if direction == "positive":
-            frame = frame[frame.shap_value > 0].sort_values(
-                "shap_value", ascending=False
-            )
+            frame = frame[frame.shap_value > 0].sort_values("shap_value", ascending=False)
         elif direction == "negative":
             frame = frame[frame.shap_value < 0].sort_values("shap_value")
         else:
-            frame = frame.reindex(
-                frame.shap_value.abs().sort_values(ascending=False).index
-            )
+            frame = frame.reindex(frame.shap_value.abs().sort_values(ascending=False).index)
         return frame.head(n).reset_index(drop=True)
 
 
-def _get_prep_and_model(pipeline) -> tuple:
-    """Fetch the ('prep', ColumnTransformer) and ('model', estimator) steps.
+@dataclass
+class ShapAnalysisBundle:
+    values: np.ndarray
+    feature_names: list
+    base_value: float
+    explainer: Any
+    output_type: str
 
-    Raises a clear error if the pipeline does not follow the project's
-    saved-pipeline convention, instead of failing with a confusing
-    AttributeError deep inside shap.
-    """
+    def explain_row(self, X: pd.DataFrame, row_index: int = 0) -> ExplanationResult:
+        if row_index < 0 or row_index >= len(X):
+            raise IndexError(f"row_index {row_index} is out of range for {len(X)} rows.")
+        shap_vector = np.asarray(self.values[row_index], dtype=float)
+        predicted_value = float(self.base_value + shap_vector.sum())
+        return ExplanationResult(
+            feature_names=self.feature_names,
+            shap_values=shap_vector,
+            base_value=self.base_value,
+            predicted_value=predicted_value,
+            raw_row=X.iloc[row_index],
+            output_type=self.output_type,
+        )
+
+
+def resolve_pipeline_steps(pipeline) -> tuple:
+    """Resolve a supported preprocess + estimator pair from commonly used aliases."""
     if not hasattr(pipeline, "named_steps"):
         raise TypeError(
-            "Expected a fitted sklearn Pipeline with 'prep' and 'model' steps, "
-            f"got {type(pipeline).__name__} instead. Baseline / dict-style "
-            "artifacts (e.g. 'Historical Mean', 'Global Popularity') are not "
-            "explainable with SHAP and should be skipped."
+            f"Expected a fitted sklearn Pipeline with supported preprocessing and estimator steps, got {type(pipeline).__name__}."
         )
     steps = pipeline.named_steps
-    if "prep" not in steps or "model" not in steps:
+    preprocessor = None
+    estimator = None
+    for alias in PREPROCESSOR_ALIASES:
+        if alias in steps:
+            preprocessor = steps[alias]
+            break
+    for alias in ESTIMATOR_ALIASES:
+        if alias in steps:
+            estimator = steps[alias]
+            break
+    if preprocessor is None or estimator is None:
         raise KeyError(
-            f"Pipeline steps {list(steps)} do not match the expected "
-            "('prep', 'model') convention used across this project."
+            f"Unsupported pipeline step names: {list(steps)}. Expected aliases among {PREPROCESSOR_ALIASES} and {ESTIMATOR_ALIASES}."
         )
-    return steps["prep"], steps["model"]
+    return preprocessor, estimator
+
+
+def _get_prep_and_model(pipeline) -> tuple:
+    return resolve_pipeline_steps(pipeline)
 
 
 def is_tree_based(model: Any) -> bool:
-    """Best-effort check for whether a model can use SHAP's fast TreeExplainer."""
     module = type(model).__module__
     return any(module.startswith(prefix) for prefix in TREE_MODEL_MODULES)
 
 
-def transform_features(pipeline, X: pd.DataFrame) -> tuple:
-    """Run only the ``prep`` step of the pipeline and return a dense matrix
-    plus the resulting (one-hot expanded) feature names.
+def _is_classifier(model: Any) -> bool:
+    return hasattr(model, "predict_proba") and hasattr(model, "classes_")
+
+
+def _positive_class_index(model: Any) -> int:
+    classes = getattr(model, "classes_", None)
+    if classes is None:
+        return 1 if hasattr(model, "n_classes_") and model.n_classes_ > 1 else 0
+    if len(classes) == 0:
+        return 0
+    if 1 in classes:
+        return int(np.where(np.asarray(classes) == 1)[0][0])
+    return max(len(classes) - 1, 0)
+
+
+def predict_explained_output(pipeline, X: pd.DataFrame):
+    """Return the model output that SHAP should explain for the selected pipeline.
+
+    Regression pipelines explain pipeline.predict(X). Binary classifiers explain
+    the positive-class probability from pipeline.predict_proba(X), not the hard
+    class label.
     """
-    prep, _ = _get_prep_and_model(pipeline)
+    _, model = resolve_pipeline_steps(pipeline)
+    if _is_classifier(model):
+        proba = np.asarray(pipeline.predict_proba(X))
+        if proba.ndim == 1:
+            return proba
+        if proba.shape[1] == 1:
+            return proba[:, 0]
+        positive_index = _positive_class_index(model)
+        return proba[:, positive_index]
+    return np.asarray(pipeline.predict(X), dtype=float)
+
+
+def transform_features(pipeline, X: pd.DataFrame) -> tuple:
+    prep, _ = resolve_pipeline_steps(pipeline)
     transformed = prep.transform(X)
     if hasattr(transformed, "toarray"):
         transformed = transformed.toarray()
@@ -162,69 +179,124 @@ def transform_features(pipeline, X: pd.DataFrame) -> tuple:
 
 
 def build_explainer(pipeline, background: Optional[pd.DataFrame] = None):
-    """Build a SHAP explainer for the ``model`` step of ``pipeline``.
-
-    Uses ``shap.TreeExplainer`` for tree-based models (fast, exact) and
-    falls back to ``shap.Explainer`` with a background sample otherwise.
-    """
-    _, model = _get_prep_and_model(pipeline)
+    _, model = resolve_pipeline_steps(pipeline)
     if is_tree_based(model):
         return shap.TreeExplainer(model)
     if background is None:
         raise ValueError(
-            "A background sample (transformed features) is required to "
-            "build a model-agnostic SHAP explainer for a non-tree model."
+            "A background sample (transformed features) is required to build a model-agnostic SHAP explainer for a non-tree model."
         )
     return shap.Explainer(model.predict, background)
 
 
-def compute_shap_values(pipeline, X: pd.DataFrame):
-    """Compute SHAP values for every row in ``X``.
+def _normalize_shap_values(raw_values, feature_names: list, model: Any, output_type: str):
+    values = np.asarray(raw_values, dtype=float)
+    if values.ndim == 1:
+        values = values.reshape(-1, 1)
+    if values.ndim == 3:
+        if _is_classifier(model):
+            pos_idx = _positive_class_index(model)
+            values = values[:, :, pos_idx]
+        else:
+            values = values[:, :, 0]
+    if values.ndim != 2:
+        raise ValueError(
+            f"SHAP values must resolve to 2D (n_samples, n_features) for {output_type}; got shape {values.shape}."
+        )
+    if values.shape[1] != len(feature_names):
+        raise ValueError(
+            f"SHAP column count {values.shape[1]} does not match expected feature count {len(feature_names)}."
+        )
+    return values
 
-    Returns
-    -------
-    values : np.ndarray of shape (n_rows, n_transformed_features)
-    feature_names : list[str]
-    base_value : float
-    explainer : the underlying shap explainer (kept for reuse / plotting)
-    """
+
+def _normalize_base_value(raw_base, model: Any, output_type: str):
+    if raw_base is None:
+        return 0.0
+    base_values = np.asarray(raw_base, dtype=float)
+    if base_values.ndim == 0:
+        return float(base_values)
+    if _is_classifier(model):
+        pos_idx = _positive_class_index(model)
+        if base_values.ndim > 1 and base_values.shape[-1] > 1:
+            return float(np.mean(base_values[:, pos_idx]))
+        return float(np.mean(base_values))
+    if base_values.ndim > 1:
+        return float(np.mean(base_values))
+    return float(np.mean(base_values))
+
+
+def compute_shap_values(pipeline, X: pd.DataFrame, output_type: Optional[str] = None):
     transformed, feature_names = transform_features(pipeline, X)
+    _, model = resolve_pipeline_steps(pipeline)
+    if output_type is None:
+        output_type = "regression_prediction" if not _is_classifier(model) else "positive_class_probability"
     explainer = build_explainer(pipeline, background=transformed)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         explanation = explainer(transformed)
-    values = np.asarray(explanation.values)
-    base_value = explanation.base_values
-    base_value = float(np.mean(base_value)) if hasattr(base_value, "__len__") else float(base_value)
-    return values, feature_names, base_value, explainer
+    values = _normalize_shap_values(explanation.values, feature_names, model, output_type)
+    base_value = _normalize_base_value(getattr(explanation, "base_values", 0.0), model, output_type)
+    return values, feature_names, base_value, explainer, output_type
 
 
 def global_feature_importance(pipeline, X: pd.DataFrame) -> pd.DataFrame:
-    """Mean absolute SHAP value per feature, sorted descending.
-
-    This is the SHAP counterpart to the ``feature_importances_``-based table
-    already produced by the demand-forecasting notebook, and is intended to
-    be compared against it in the explainability report.
-    """
-    values, feature_names, _, _ = compute_shap_values(pipeline, X)
+    values, feature_names, _, _, _ = compute_shap_values(pipeline, X)
     importance = pd.Series(np.abs(values).mean(axis=0), index=feature_names)
     importance = importance.sort_values(ascending=False)
     return importance.to_frame("mean_abs_shap")
 
 
 def explain_row(pipeline, X: pd.DataFrame, row_index: int = 0) -> ExplanationResult:
-    """Produce a local (per-design) explanation for a single row of ``X``."""
     if row_index < 0 or row_index >= len(X):
         raise IndexError(f"row_index {row_index} is out of range for {len(X)} rows.")
-    values, feature_names, base_value, _ = compute_shap_values(pipeline, X)
-    predicted_value = float(base_value + values[row_index].sum())
+    values, feature_names, base_value, _, output_type = compute_shap_values(pipeline, X)
+    shap_vector = np.asarray(values[row_index], dtype=float)
+    predicted_value = float(base_value + shap_vector.sum())
     return ExplanationResult(
         feature_names=feature_names,
-        shap_values=values[row_index],
+        shap_values=shap_vector,
         base_value=base_value,
         predicted_value=predicted_value,
         raw_row=X.iloc[row_index],
+        output_type=output_type,
     )
+
+
+def reconstruct_prediction_from_shap(explanation: ExplanationResult) -> float:
+    return float(explanation.base_value + np.asarray(explanation.shap_values, dtype=float).sum())
+
+
+def check_shap_prediction_consistency(
+    pipeline,
+    X: pd.DataFrame,
+    row_index: int = 0,
+    tolerance: float = 1e-3,
+) -> dict:
+    if row_index < 0 or row_index >= len(X):
+        raise IndexError(f"row_index {row_index} is out of range for {len(X)} rows.")
+    explanation = explain_row(pipeline, X, row_index=row_index)
+    row = pd.DataFrame([X.iloc[row_index]])
+    actual_prediction = float(predict_explained_output(pipeline, row)[0])
+    reconstructed_prediction = reconstruct_prediction_from_shap(explanation)
+    difference = abs(actual_prediction - reconstructed_prediction)
+    status = difference <= tolerance
+    return {
+        "row_index": row_index,
+        "output_type": explanation.output_type,
+        "actual_prediction": actual_prediction,
+        "reconstructed_prediction": reconstructed_prediction,
+        "difference": difference,
+        "tolerance": tolerance,
+        "consistent": status,
+        "base_value": explanation.base_value,
+        "sum_shap_values": float(np.asarray(explanation.shap_values, dtype=float).sum()),
+        "message": (
+            "SHAP reconstruction is consistent within tolerance."
+            if status
+            else "SHAP reconstruction differs from the actual model prediction; check model/explainer scale or feature alignment."
+        ),
+    }
 
 
 def save_global_importance(
@@ -234,11 +306,6 @@ def save_global_importance(
     figures_path: Path,
     top_n: int = 20,
 ):
-    """Compute global SHAP importance and persist a CSV + bar-chart figure.
-
-    Kept as a thin convenience wrapper so the notebook cell stays short;
-    all the real logic lives in :func:`global_feature_importance` above.
-    """
     import matplotlib.pyplot as plt
 
     importance = global_feature_importance(pipeline, X)
