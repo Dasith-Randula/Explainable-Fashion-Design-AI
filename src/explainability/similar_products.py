@@ -35,7 +35,7 @@ def normalize(embeddings: np.ndarray) -> np.ndarray:
 
 
 def find_similar_products(
-    query_embedding: np.ndarray,
+    query_embedding: Optional[np.ndarray],
     reference_embeddings: np.ndarray,
     reference_metadata: pd.DataFrame,
     top_k: int = 5,
@@ -43,23 +43,14 @@ def find_similar_products(
 ) -> pd.DataFrame:
     """Return the ``top_k`` reference rows most similar to ``query_embedding``.
 
-    Parameters
-    ----------
-    query_embedding:
-        A single embedding vector, shape ``(d,)``, for the new/generated
-        design being explained.
-    reference_embeddings:
-        Embedding matrix for known real products, shape ``(n, d)``.
-    reference_metadata:
-        DataFrame with exactly ``n`` rows aligned to ``reference_embeddings``
-        (e.g. product id, category, colour, and - when available - an
-        observed outcome such as demand or popularity).
-    outcome_column:
-        If given and present in ``reference_metadata``, the returned frame
-        is annotated with a plain-language ``evidence_note`` summarising
-        how similar past products performed, for direct use in an
-        explanation panel.
+    A real generated-design query embedding must be supplied. Otherwise this
+    function exits gracefully without fabricating similarity evidence.
     """
+    if query_embedding is None:
+        return reference_metadata.iloc[0:0].assign(
+            cosine_similarity=[],
+            evidence_note="Similar-product integration is pending a real generated-design query embedding from the upstream visual-feature pipeline.",
+        )
     if len(reference_embeddings) != len(reference_metadata):
         raise ValueError(
             "reference_embeddings and reference_metadata must have the same "
@@ -68,13 +59,21 @@ def find_similar_products(
     if len(reference_embeddings) == 0:
         return reference_metadata.iloc[0:0].assign(cosine_similarity=[])
 
-    query = normalize(np.asarray(query_embedding, dtype=float).reshape(1, -1))
-    refs = normalize(reference_embeddings)
-    scores = (refs @ query.T).ravel()
+    query = np.asarray(query_embedding, dtype=float).reshape(-1)
+    refs = np.asarray(reference_embeddings, dtype=float)
+    if refs.ndim == 1:
+        refs = refs.reshape(1, -1)
+    if query.shape[0] != refs.shape[1]:
+        raise ValueError(
+            f"query embedding dimension ({query.shape[0]}) does not match reference embedding dimension ({refs.shape[1]})."
+        )
+
+    query_norm = normalize(query.reshape(1, -1))
+    refs_norm = normalize(refs)
+    scores = (refs_norm @ query_norm.T).ravel()
 
     top_k = min(top_k, len(reference_metadata))
     order = np.argsort(-scores)[:top_k]
-
     result = reference_metadata.iloc[order].copy()
     result["cosine_similarity"] = scores[order]
 
@@ -84,6 +83,8 @@ def find_similar_products(
             f"{top_k} visually similar products average "
             f"{outcome_column}={mean_outcome:.2f}"
         )
+    else:
+        result["evidence_note"] = "visual similarity evidence only"
     return result.reset_index(drop=True)
 
 
