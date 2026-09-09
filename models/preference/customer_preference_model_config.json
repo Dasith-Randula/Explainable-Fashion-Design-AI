@@ -1,0 +1,42 @@
+{
+  "selected_model": "Category Preference",
+  "selection_metric": "validation_MAP@12",
+  "TOP_K": 12,
+  "recent_popularity_days": 30,
+  "candidate_pool_policy": "validation/test contain at least 30 negative candidates per customer when catalog permits",
+  "negative_sampling_policy": "for train, sample articles absent from customer history strictly before each positive event; for validation/test, exclude history and all target-window positives; seed 42",
+  "feature_columns": [
+    "split_name",
+    "past_purchase_count",
+    "recent_purchase_count",
+    "historical_average_price",
+    "unique_articles_purchased",
+    "unique_categories_purchased",
+    "days_since_previous_purchase",
+    "preferred_category",
+    "preferred_garment_group",
+    "preferred_colour",
+    "product_type_name",
+    "product_group_name",
+    "garment_group_name",
+    "department_name",
+    "section_name",
+    "colour_group_name",
+    "perceived_colour_value_name",
+    "historical_article_popularity",
+    "recent_article_popularity",
+    "historical_article_price"
+  ],
+  "run_type": "fast_dev",
+  "fast_dev_run": true,
+  "final_evaluation": false,
+  "leakage_exclusions": [
+    "article_id",
+    "customer_id",
+    "price",
+    "sales_channel_id",
+    "split",
+    "t_dat",
+    "target"
+  ]
+}
