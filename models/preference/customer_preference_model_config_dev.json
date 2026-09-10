@@ -1,5 +1,5 @@
 {
-  "selected_model": "Category Preference",
+  "selected_model": "Logistic Regression",
   "selection_metric": "validation_MAP@12",
   "TOP_K": 12,
   "recent_popularity_days": 30,
@@ -27,9 +27,17 @@
     "recent_article_popularity",
     "historical_article_price"
   ],
-  "run_type": "fast_dev",
-  "fast_dev_run": true,
+  "run_type": "full_validation",
+  "fast_dev_run": false,
   "final_evaluation": false,
+  "training_rows_available": 60719724,
+  "training_rows_used": 1000000,
+  "training_positive_rows_available": 20239908,
+  "training_negative_rows_available": 40479816,
+  "training_positive_rows_used": 500000,
+  "training_negative_rows_used": 500000,
+  "max_positive_train_rows": 500000,
+  "max_negative_train_rows": 500000,
   "leakage_exclusions": [
     "article_id",
     "customer_id",
