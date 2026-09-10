@@ -92,9 +92,9 @@
   "selection_metric": "validation_WAPE",
   "trained_on": "train only",
   "selection_split": "validation",
-  "test_evaluated_once": false,
-  "run_type": "fast_dev",
-  "fast_dev_run": true,
-  "final_evaluation": false,
+  "test_evaluated_once": true,
+  "run_type": "full",
+  "fast_dev_run": false,
+  "final_evaluation": true,
   "shap": "not implemented; owned by Dewmi"
 }
