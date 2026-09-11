@@ -1,0 +1,22 @@
+{
+  "random_state": 42,
+  "batch_size": 32,
+  "num_epochs": 5,
+  "learning_rate": 0.0001,
+  "target_name": "lower_fabric",
+  "target_column": "texture/fabric_ann.txt__value_2",
+  "num_classes": 6,
+  "use_class_weights": true,
+  "class_weights": {
+    "0": 3.1635220125786163,
+    "1": 0.3736182112116048,
+    "2": 0.3714999456934941,
+    "3": 35.18930041152263,
+    "4": 3.6660235798499463,
+    "5": 69.52032520325203
+  },
+  "class_weights_source": "training split only",
+  "resnet_preprocessing": "ResNet50_Weights.DEFAULT.transforms()",
+  "device": "cpu",
+  "final_evaluation": false
+}
