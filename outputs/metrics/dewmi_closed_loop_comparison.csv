@@ -1,2 +1,2 @@
-original_score,refined_score,score_delta,improved,n_suggestions,prompt_hints
-3.4022860527038574,3.4022860527038574,0.0,False,0,
+original_score,refined_score,score_delta,improved,n_suggestions,prompt_hints,run_type
+2.971026659011841,3.077472686767578,0.1064460277557373,True,1,use black instead of yellow for the color,full
