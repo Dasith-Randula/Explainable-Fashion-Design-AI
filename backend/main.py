@@ -3,10 +3,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.api.analysis import router as analysis_router
 from backend.api.demand import router as demand_router
+from backend.api.explainability import router as explainability_router
 from backend.api.health import router as health_router
 from backend.api.models import router as models_router
 from backend.api.preference import router as preference_router
+from backend.api.refinement import router as refinement_router
 from backend.api.visual import router as visual_router
 from backend.services.model_registry import get_model_registry
 
@@ -36,6 +39,9 @@ app.include_router(models_router)
 app.include_router(demand_router)
 app.include_router(preference_router)
 app.include_router(visual_router)
+app.include_router(explainability_router)
+app.include_router(refinement_router)
+app.include_router(analysis_router)
 
 
 @app.get("/", tags=["root"])
