@@ -5,6 +5,7 @@ import DesignStudio from './pages/DesignStudio'
 import Explore from './pages/Explore'
 import Forecast from './pages/Forecast'
 import Home from './pages/Home'
+import Insights from './pages/Insights'
 import MyDesigns from './pages/MyDesigns'
 import './styles/home.css'
 
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/design-studio" element={<DesignStudio />} />
+        <Route path="/insights" element={<Insights />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/forecast" element={<Forecast />} />
         <Route path="/my-designs" element={<MyDesigns />} />

@@ -1,5 +1,9 @@
 import { ArrowUpRight } from 'lucide-react'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { getFriendlyApiError } from '../api/errors'
+import { predictDemand } from '../api/demand'
+import { getModelStatus, isDemandModelReady } from '../api/system'
+import { demoDemandContext } from '../data/demoDemandContext'
 import SiteFooter from '../components/SiteFooter'
 import SiteHeader from '../components/SiteHeader'
 import CategoryTrendsChart from '../components/forecast/CategoryTrendsChart'
@@ -12,6 +16,56 @@ import '../styles/forecast.css'
 
 function Forecast() {
   const summary = useMemo(() => summaryCards, [])
+  const [realModelPrediction, setRealModelPrediction] = useState<number | null>(null)
+  const [isRunningRealModel, setIsRunningRealModel] = useState(false)
+  const [demandModelAvailable, setDemandModelAvailable] = useState(true)
+  const [realModelError, setRealModelError] = useState('')
+
+  useEffect(() => {
+    let isMounted = true
+
+    const checkDemandModelStatus = async () => {
+      try {
+        const status = await getModelStatus()
+
+        if (isMounted) {
+          setDemandModelAvailable(isDemandModelReady(status))
+        }
+      } catch {
+        if (isMounted) {
+          setDemandModelAvailable(false)
+        }
+      }
+    }
+
+    void checkDemandModelStatus()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const handleRunRealModel = async () => {
+    if (!demandModelAvailable) {
+      setRealModelError('Demand model is currently unavailable.')
+      return
+    }
+
+    setIsRunningRealModel(true)
+    setRealModelError('')
+
+    try {
+      const response = await predictDemand(demoDemandContext)
+      setRealModelPrediction(response.prediction)
+    } catch (error) {
+      const message = getFriendlyApiError(error, 'The real demand model is currently unavailable.')
+
+      setRealModelError(message)
+      setRealModelPrediction(null)
+    } finally {
+      setIsRunningRealModel(false)
+    }
+  }
 
   return (
     <div className="forecast-page">
@@ -34,7 +88,47 @@ function Forecast() {
             <div className="forecast-live-card__icon">
               <span>✦</span>
             </div>
-            <p>Smarter fashion for a brighter tomorrow.</p>
+            <div className="forecast-live-card__content">
+              <span className="forecast-real-badge">REAL MODEL DEMO</span>
+              <p className="forecast-live-card__title">Smarter fashion for a brighter tomorrow.</p>
+              <p className="forecast-live-card__helper">
+                Run the trained XGBoost model using a verified sample demand context.
+              </p>
+
+              <div className="forecast-live-card__actions">
+                <button
+                  type="button"
+                  className="forecast-real-button"
+                  onClick={handleRunRealModel}
+                  disabled={isRunningRealModel || !demandModelAvailable}
+                >
+                  {isRunningRealModel ? 'Running...' : 'Run sample prediction ↗'}
+                </button>
+              </div>
+
+              {!demandModelAvailable ? (
+                <p className="forecast-real-error">Demand model is currently unavailable.</p>
+              ) : null}
+
+              {realModelPrediction !== null ? (
+                <div className="forecast-real-result">
+                  <div className="forecast-real-result__row">
+                    <span className="forecast-real-label">Model</span>
+                    <strong>XGBoost</strong>
+                  </div>
+                  <div className="forecast-real-result__row">
+                    <span className="forecast-real-label">Predicted demand</span>
+                    <strong>{realModelPrediction}</strong>
+                  </div>
+                  <div className="forecast-real-result__row forecast-real-result__row--inline">
+                    <span className="forecast-real-label">Badge</span>
+                    <strong className="forecast-real-badge forecast-real-badge--result">Real model output</strong>
+                  </div>
+                </div>
+              ) : null}
+
+              {realModelError ? <p className="forecast-real-error">{realModelError}</p> : null}
+            </div>
           </aside>
         </section>
 
